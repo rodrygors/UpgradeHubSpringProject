@@ -3,8 +3,6 @@ package com.example.loja.models;
 import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @Getter
@@ -14,18 +12,18 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @Entity
-public class Customer {
+public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotBlank(message = "Name is mandatory")
-    private String name;
-
-    @Min(value = 0)
-    private int age;
+    private Boolean isPaid;
 
     @OneToMany
-    private List<Order> orders;
+    private List<Product> products;
+
+    @ManyToOne
+    @JoinColumn(name = "id_customer")
+    private Customer customer;
 }

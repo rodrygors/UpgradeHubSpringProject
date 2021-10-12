@@ -1,4 +1,4 @@
-package com.example.loja.models;
+package com.example.loja.requests;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,5 +12,5 @@ import lombok.NoArgsConstructor;
 public class ProductCreationRequest {
     private String description;
     private float price;
-    private Boolean isPaid;
+    private Long orderId;
 }

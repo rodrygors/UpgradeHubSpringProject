@@ -1,6 +1,7 @@
 package com.example.loja.controllers;
 
 import com.example.loja.models.Customer;
+import com.example.loja.requests.CustomerCreationRequest;
 import com.example.loja.services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,27 +19,30 @@ public class CustomerController {
     CustomerService customerServ;
 
     //Get all customers
-    @GetMapping("/getCustomers")
+    @GetMapping("/customers")
     public List<Customer> getCustomers() {
         return customerServ.findAll();
     }
 
     //Get
-    @GetMapping("/getCustomersById/{id}")
+    @GetMapping("/customers/{id}")
     public Optional<Customer> getCustomersById(@PathVariable(value = "id") Long id) {
         return customerServ.findById(id);
     }
 
     //Create customer
-    @PostMapping(value = "/createCustomer", consumes = "application/json", produces = "application/json")
-    public Customer createCustomer(@RequestBody Customer customer) {
-        Customer newCustomer = Customer.builder().name(customer.getName()).age(customer.getAge()).build();
+    @PostMapping(value = "/customers")
+    public Customer createCustomer(@RequestBody CustomerCreationRequest customerReq) {
+        Customer newCustomer = Customer.builder()
+                .name(customerReq.getName())
+                .age(customerReq.getAge())
+                .build();
         customerServ.save(newCustomer);
         return newCustomer;
     }
 
     //Update customer
-    @PutMapping(value = "updateCustomers/{id}", consumes = "application/json", produces = "application/json")
+    @PutMapping(value = "customers/{id}")
     public Customer updateCustomer(@PathVariable(value = "id") Long id, @RequestBody Customer customer) {
         System.out.println(id);
         Optional<Customer> customerToBeUpdated = customerServ.findById(id);
@@ -54,7 +58,7 @@ public class CustomerController {
     }
 
     //Delete customer
-    @DeleteMapping(value = "/deleteCustomer/{id}")
+    @DeleteMapping(value = "/customers/{id}")
     public void deleteCustomer(@PathVariable(value = "id") Long id){
         if(customerServ.findById(id).isPresent()) customerServ.deleteById(id);
         else ResponseEntity.badRequest().body("Customer not found");
