@@ -1,4 +1,4 @@
-package com.example.loja.utils;
+package com.example.loja.util;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

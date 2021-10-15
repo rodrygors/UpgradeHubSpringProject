@@ -1,4 +1,4 @@
-package com.example.loja.requests;
+package com.example.loja.controller.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ProductCreationRequest {
+public class ProductReturnResponse {
+    private Long id;
     private String description;
     private float price;
-    private Long orderId;
 }

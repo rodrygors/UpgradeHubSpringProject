@@ -1,4 +1,4 @@
-package com.example.loja.requests;
+package com.example.loja.controller.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class OrderCreationRequest {
-    private Boolean isPaid;
-    private Long customerId;
+public class CustomerCreationRequest {
+    private String name;
+    private int age;
 }

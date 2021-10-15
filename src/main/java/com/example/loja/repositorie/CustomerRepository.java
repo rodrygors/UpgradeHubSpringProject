@@ -1,6 +1,6 @@
-package com.example.loja.repositories;
+package com.example.loja.repositorie;
 
-import com.example.loja.models.Customer;
+import com.example.loja.model.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
