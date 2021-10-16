@@ -48,6 +48,6 @@ public class Purchase {
             }
             return productsResponse;
         }
-        return Collections.emptyList();
+        return new ArrayList<>();
     }
 }

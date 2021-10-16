@@ -24,7 +24,9 @@ public class CustomerReturnResponse {
         this.id = customer.getId();
         this.name = customer.getName();
         this.age = customer.getAge();
-        this.purchasesResp = customer.getPurchasesResponse();
+        if(customer.getPurchasesResponse() != null && !customer.getPurchasesResponse().isEmpty()){
+            this.purchasesResp = customer.getPurchasesResponse();
+        }
         return this;
     }
 }

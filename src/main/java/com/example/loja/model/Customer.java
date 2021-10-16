@@ -36,11 +36,14 @@ public class Customer {
     public List<PurchaseReturnResponse> getPurchasesResponse() {
         List<PurchaseReturnResponse> purchasesResponse = new ArrayList<>();
 
-        for (Purchase purchase : purchases) {
-            PurchaseReturnResponse purchaseResp = new PurchaseReturnResponse();
-            purchaseResp.createResponseFromPurchase(purchase);
-            purchasesResponse.add(purchaseResp);
+        if(purchases != null && !purchases.isEmpty()) {
+            for (Purchase purchase : purchases) {
+                PurchaseReturnResponse purchaseResp = new PurchaseReturnResponse();
+                purchaseResp.createResponseFromPurchase(purchase);
+                purchasesResponse.add(purchaseResp);
+            }
+            return purchasesResponse;
         }
-        return purchasesResponse;
+        return new ArrayList<>();
     }
 }
