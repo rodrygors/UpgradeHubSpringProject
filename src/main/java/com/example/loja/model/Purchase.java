@@ -6,7 +6,6 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Getter
@@ -38,7 +37,7 @@ public class Purchase {
     public List<ProductReturnResponse> getProductsResponse() {
         List<ProductReturnResponse> productsResponse = new ArrayList<>();
 
-        if(purchase_product != null && !purchase_product.isEmpty()){
+        if (purchase_product != null && !purchase_product.isEmpty()) {
             for (Product product : this.purchase_product) {
                 productsResponse.add(new ProductReturnResponse(
                         product.getId(),
@@ -49,5 +48,17 @@ public class Purchase {
             return productsResponse;
         }
         return new ArrayList<>();
+    }
+
+    //Returns the combined prices of all products in purchase_product
+    @JsonIgnore
+    public float getTotal() {
+        float total = 0f;
+        if (purchase_product != null && !purchase_product.isEmpty()) {
+            for (Product product : purchase_product) {
+                total += product.getPrice();
+            }
+        }
+        return total;
     }
 }

@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -19,6 +20,7 @@ public class CustomerReturnResponse {
     private int age;
     private List<PurchaseReturnResponse> purchasesResp;
 
+    //Returns a CustomerReturnResponse with attributes taken from a Customer object passed by parameter
     @JsonIgnore
     public CustomerReturnResponse createResponseFromCustomer(Customer customer) {
         this.id = customer.getId();
@@ -27,6 +29,7 @@ public class CustomerReturnResponse {
         if(customer.getPurchasesResponse() != null && !customer.getPurchasesResponse().isEmpty()){
             this.purchasesResp = customer.getPurchasesResponse();
         }
+        else this.purchasesResp = new ArrayList<>();
         return this;
     }
 }

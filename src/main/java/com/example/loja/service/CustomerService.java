@@ -30,7 +30,9 @@ public class CustomerService {
     }
 
     public void deleteById(Long aLong) {
+        //By using this.findById() customerToDelete is guaranteed to exist
         Customer customerToDelete = this.findById(aLong);
+        //Deletes all purchases associated with this Customer before deleting it
         for (Purchase purchase : customerToDelete.getPurchases()) {
             purchaseRepo.deleteById(purchase.getId());
         }
@@ -42,6 +44,7 @@ public class CustomerService {
     }
 
     public Customer update(CustomerCreationRequest newCustomerReq, Long customerId) {
+        //By using this.findById() customer is guaranteed to exist
         Customer customer = this.findById(customerId);
         customer.setName(newCustomerReq.getName());
         customer.setAge(newCustomerReq.getAge());

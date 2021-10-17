@@ -1,17 +1,16 @@
 package com.example.loja.service;
 
 import com.example.loja.exception.ProductNotFound;
+import com.example.loja.exception.PurchaseNotFound;
 import com.example.loja.model.Product;
 import com.example.loja.model.Purchase;
 import com.example.loja.repositorie.ProductRepository;
 import com.example.loja.repositorie.PurchaseRepository;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 @Service
 public class ProductService {
@@ -30,26 +29,22 @@ public class ProductService {
 
     public List<Product> getAllProductsFromPurchase(Long purchaseId) {
         List<Product> products = new ArrayList<>();
-        Optional<Purchase> purchase = purchaseRepo.findById(purchaseId);
-
-        if (purchase.isPresent()) {
-            for (var product : purchase.get().getPurchase_product()) {
-                products.add(product);
-            }
-            return products;
-        }
-        return null;
+        Purchase purchase = purchaseRepo.findById(purchaseId).orElseThrow(PurchaseNotFound::new);
+        //Populate products list with all products from the found Purchase object
+        products.addAll(purchase.getPurchase_product());
+        return products;
     }
 
     public Product findById(Long aLong) {
         return productRepo.findById(aLong).orElseThrow(ProductNotFound::new);
     }
 
-    public <S extends Product> S save(S entity) {
-        return productRepo.save(entity);
+    public Product save(String description, Float price) {
+        return productRepo.save(Product.builder().description(description).price(price).build());
     }
 
     public Product update(Long id, String description, float price) {
+        //By using this.findById() product is guaranteed to exist
         Product product = this.findById(id);
         product.setDescription(description);
         product.setPrice(price);

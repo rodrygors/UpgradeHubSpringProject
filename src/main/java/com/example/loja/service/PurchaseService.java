@@ -31,11 +31,6 @@ public class PurchaseService {
         return purchaseRepo.findAll();
     }
 
-
-    public Optional<Purchase> getById(Long id) {
-        return purchaseRepo.findById(id);
-    }
-
     public Purchase findById(Long id) {
         return purchaseRepo.findById(id).orElseThrow(PurchaseNotFound::new);
     }
@@ -49,6 +44,7 @@ public class PurchaseService {
     }
 
     public Purchase addProductToPurchase(Long productId, Long purchaseId) {
+        //By using this.findById() purchase is guaranteed to exist
         Purchase purchase = this.findById(purchaseId);
         Product product = productRepository.findById(productId).orElseThrow(ProductNotFound::new);
 
@@ -59,7 +55,7 @@ public class PurchaseService {
     public void deleteById(Long id) {
         Purchase purchase = this.findById(id);
 
-        //Remove purchase from it's customer's purchases list
+        //Remove purchase from its customer's purchases list
         purchase.getCustomer().getPurchases().remove(purchase);
         customerRepo.save(purchase.getCustomer());
         purchaseRepo.deleteById(purchase.getId());
